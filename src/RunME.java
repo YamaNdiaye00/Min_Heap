@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class RunME {
 
@@ -23,6 +25,24 @@ public class RunME {
         tester.removeMin();
         System.out.println(tester);
 
+        int n = 3;
+        ArrayList<Heap> heaps = new ArrayList<>();
+        for (int i = n; i <= 20; i++) {
+            Random r = new Random();
+            int[] temp = new int[(int) Math.pow(2, n)];
+            for (int j = 0; j < temp.length; j++) {
+                temp[j] = r.nextInt(21);
+            }
+            Heap heap = new Heap(temp.length, temp);
+            heaps.add(heap);
+        }
+        long[] heapSortTimes = new long[heaps.size()];
+        for (int i = 0; i < heapSortTimes.length; i++) {
+            long startTime = System.nanoTime();
+            heapSort(heaps.get(i));
+            heapSortTimes[i] = System.nanoTime() - startTime;
+        }
+        System.out.println(Arrays.toString(heapSortTimes));
 
     }
 }
