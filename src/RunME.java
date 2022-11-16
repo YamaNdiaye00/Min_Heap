@@ -4,6 +4,19 @@ import java.util.Random;
 
 public class RunME {
 
+    /*
+    arr <- new array with same length as Heap
+    FOR each index of the array
+        element at index <- Minimum element of heap
+    return array
+     */
+
+    /*
+    for loop from 0 to n-1, which is n
+        nested inside the loop is the removeMin() function which is log(n)
+    O(n) is n * log(n)
+    Time complexity: O(n log n)
+     */
     public static int[] heapSort(Heap heap) {
         int[] arr = new int[heap.size()];
         for (int i = 0; i < arr.length; i++) {
