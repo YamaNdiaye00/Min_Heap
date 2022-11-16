@@ -84,11 +84,13 @@ public class Heap {
         upHeap();
     }
 
-    public void removeMin() {
-        if (size == 0) return;
+    public int removeMin() {
+        if (size == 0) return 0;
+        int popped = H[0];
         H[0] = H[size - 1];
         size--;
         downHeap();
+        return popped;
     }
 
     public int size() {
