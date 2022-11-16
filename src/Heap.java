@@ -19,38 +19,33 @@ public class Heap {
         maxSize = n;
         Scanner scnr = new Scanner(str);
         while (scnr.hasNext()) {
-            H[size] = scnr.nextInt();
-            size++;
+            insert(scnr.nextInt());
         }
     }
 
-    public void heapify(int index) {
-        if (index > size / 2) {
-            int temp = index;
 
-            if (getRightChildIndex(index) <= size)
-                temp = H[getLeftChildIndex(index)] < H[getRightChildIndex(index)] ? getLeftChildIndex(index) : getRightChildIndex(index);
-            else
-                temp = H[getLeftChildIndex(index)];
-
-            if (H[index] > H[getLeftChildIndex(index)] || H[index] > H[getLeftChildIndex(index)]) {
-                swap(index, temp);
-                heapify(temp);
-            }
-
-        }
+    public int getParentIndex(int index) {
+        return (index - 1) / 2;
     }
 
-    public int getParentIndex(int childIndex) {
-        return (childIndex - 1) / 2;
+    public int getLeftChildIndex(int index) {
+        return (index * 2) + 1;
     }
 
-    public int getLeftChildIndex(int parentIndex) {
-        return (parentIndex * 2) + 1;
+    public int getRightChildIndex(int index) {
+        return (index * 2) + 2;
     }
 
-    public int getRightChildIndex(int parentIndex) {
-        return (parentIndex * 2) + 2;
+    public boolean hasLeftChild(int index) {
+        return getLeftChildIndex(index) < size;
+    }
+
+    public boolean hasRightChild(int index) {
+        return getRightChildIndex(index) < size;
+    }
+
+    public boolean hasParent(int index) {
+        return getParentIndex(index) >= 0;
     }
 
     public void swap(int a, int b) {
@@ -59,10 +54,9 @@ public class Heap {
         H[b] = temp;
     }
 
-
-    public void heapSort() {
+    public void upHeap() {
         int index = size - 1;
-        while (getParentIndex(index) >= 0 && H[getParentIndex(index)] > H[index]) {
+        while (hasParent(index) && H[getParentIndex(index)] > H[index]) {
             swap(getParentIndex(index), index);
             index = getParentIndex(index);
         }
@@ -70,44 +64,37 @@ public class Heap {
 
     public void downHeap() {
         int index = 0;
-        while (getLeftChildIndex(index) < size) {
-            int childIndex = getLeftChildIndex(index);
-            if (getRightChildIndex(index) < size && H[getRightChildIndex(index)] < H[getLeftChildIndex(index)])
-                childIndex = getRightChildIndex(index);
-            if (H[index] < H[childIndex]) break;
-            else swap(index, childIndex);
-            index = childIndex;
+        while (hasLeftChild(index)) {
+            int child = getLeftChildIndex(index);
+            if (hasRightChild(index) && H[getRightChildIndex(index)] < H[getRightChildIndex(index)]) {
+                child = getRightChildIndex(index);
+            }
+            if (H[index] < H[child]) break;
+            else swap(index, child);
+            index = child;
         }
     }
 
-    public void insert(int n) {
-        try {
-            if (size >= maxSize) throw new IndexOutOfBoundsException("Heap is full");
-            H[size] = n;
-            size++;
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
+    public void insert(int element) {
+
+        if (size >= maxSize) {
+            return;
+        }
+
+        H[size] = element;
+        int current = size;
+
+        while (H[current] < H[getParentIndex(current)]) {
+            swap(current, getParentIndex(current));
+            current = getParentIndex(current);
         }
     }
 
     public void removeMin() {
-        try {
-            if (size <= 0) throw new Exception("Heap is empty");
-            H[0] = H[size - 1];
-            size--;
-            if (size > 0) downHeap();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public int min() {
-        try {
-            if (size <= 0) throw new Exception("Heap is empty");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return H[0];
+        if (size == 0) return;
+        H[0] = H[size - 1];
+        size--;
+        downHeap();
     }
 
     public int size() {
