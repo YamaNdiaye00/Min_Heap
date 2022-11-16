@@ -66,7 +66,7 @@ public class Heap {
         int index = 0;
         while (hasLeftChild(index)) {
             int child = getLeftChildIndex(index);
-            if (hasRightChild(index) && H[getRightChildIndex(index)] < H[getRightChildIndex(index)]) {
+            if (hasRightChild(index) && H[getRightChildIndex(index)] < H[getLeftChildIndex(index)]) {
                 child = getRightChildIndex(index);
             }
             if (H[index] < H[child]) break;
@@ -75,19 +75,13 @@ public class Heap {
         }
     }
 
-    public void insert(int element) {
-
+    public void insert(int n) {
         if (size >= maxSize) {
             return;
         }
-
-        H[size] = element;
-        int current = size;
-
-        while (H[current] < H[getParentIndex(current)]) {
-            swap(current, getParentIndex(current));
-            current = getParentIndex(current);
-        }
+        H[size] = n;
+        size++;
+        upHeap();
     }
 
     public void removeMin() {
