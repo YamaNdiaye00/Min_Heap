@@ -24,22 +24,6 @@ public class Heap {
         }
     }
 
-    public void heapify(int index) {
-        if (index > size / 2) {
-            int temp = index;
-
-            if (getRightChildIndex(index) <= size)
-                temp = H[getLeftChildIndex(index)] < H[getRightChildIndex(index)] ? getLeftChildIndex(index) : getRightChildIndex(index);
-            else
-                temp = H[getLeftChildIndex(index)];
-
-            if (H[index] > H[getLeftChildIndex(index)] || H[index] > H[getLeftChildIndex(index)]) {
-                swap(index, temp);
-                heapify(temp);
-            }
-
-        }
-    }
 
     public int getParentIndex(int childIndex) {
         return (childIndex - 1) / 2;
