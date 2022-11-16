@@ -13,13 +13,12 @@ public class Heap {
         maxSize = n;
     }
 
-    public Heap(int n, String str) {
+    public Heap(int n, int[] arr) {
         H = new int[n];
         size = 0;
         maxSize = n;
-        Scanner scnr = new Scanner(str);
-        while (scnr.hasNext()) {
-            insert(scnr.nextInt());
+        for (int i : arr) {
+            insert(i);
         }
     }
 
