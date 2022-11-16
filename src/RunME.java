@@ -1,4 +1,15 @@
-public class Main {
+import java.util.Arrays;
+
+public class RunME {
+
+    public static int[] heapSort(Heap heap) {
+        int[] arr = new int[heap.size()];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = heap.removeMin();
+        }
+        return arr;
+    }
+
     public static void main(String[] args) {
         Heap tester = new Heap(7);
         tester.insert(2);
